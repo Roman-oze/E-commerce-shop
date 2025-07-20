@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* ──────────────── COMPONENTS ──────────────── */
+@layer components {
+  /* 🔵 Button */
+  .btn-primary {
+    @apply bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition;
+  }
+
+  .btn-secondary {
+    @apply bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition;
+  }
+
+  /* 🟦 Card Variants */
+  .card {
+    @apply bg-white text-black shadow-md p-4 rounded-3xl border border-slate-700;
+  }
+
+  .card-style {
+    @apply bg-white text-black shadow-md p-4 rounded-3xl border border-red-700 hover:bg-blue-700 hover:text-white transition;
+  }
+
+  /* 🟪 Badge */
+  .badge {
+    @apply inline-block text-sm bg-gray-700 text-white px-2 py-1 rounded-full;
+  }
+
+  /* 🔘 Input field */
+  .custom-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500;
+  }
+
+  /* 🔘 Button (full-width) */
+  .custom-button {
+    @apply w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition;
+  }
+
+  /* 🔳 Product Grid */
+  .product-grid {
+    @apply grid gap-4 grid-cols-1;
+  }
+
+  @screen sm {
+    .product-grid {
+      @apply grid-cols-2;
+    }
+  }
+
+  @screen md {
+    .product-grid {
+      @apply grid-cols-3;
+    }
+  }
+}
+
+/* ──────────────── UTILITIES ──────────────── */
+@layer utilities {
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .clip-circle {
+    clip-path: circle(50% at center);
+  }
+
+  .text-gradient {
+    background: linear-gradient(to right, #4f46e5, #22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .shadow-soft {
+    @apply shadow-lg shadow-gray-400/40;
+  }
+}
+
+/* ──────────────── BODY FONT ──────────────── */
+/* Tailwind doesn't include custom fonts by default, so add this in your global CSS */
+body {
+  font-family: 'Satoshi', sans-serif;
+}
