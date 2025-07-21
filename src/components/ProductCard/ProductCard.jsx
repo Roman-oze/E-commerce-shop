@@ -1,18 +1,20 @@
 // src/components/ProductCard/ProductCard.jsx
-import React, { useState } from "react";
+import React from "react";
 import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, isInCart, onAdd, onRemove }) {
+  const {
+    name,
+    image,
+    price,
+    oldPrice,
+    discount,
+    rating,
+    ratingText,
+    stock,
+    disabled,
+  } = product;
 
-  const [isChange , setIsChange] = useState(false);
-
-  function handleOnChange(){
-    setIsChange(!isChange);
-  }
-
-  const {name,image,price,oldPrice,discount,rating,ratingText,stock,disabled,} = product;
-
-  // Generate star rating
   const stars = Array.from({ length: 5 }, (_, i) => (
     <span key={i} className={i < rating ? "text-yellow-400" : "text-gray-300"}>
       ★
@@ -26,7 +28,6 @@ export default function ProductCard({ product }) {
       </div>
       <div className="p-4">
         <h3 className="font-medium text-base mb-1">{name}</h3>
-
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center text-sm">
             <div className="flex">{stars}</div>
@@ -47,39 +48,18 @@ export default function ProductCard({ product }) {
           )}
         </div>
 
-      <button
-        onClick={handleOnChange}
-        className={`w-full mt-2 py-2 text-sm rounded flex items-center justify-center gap-2 transition duration-300 
-          ${isChange 
-            ? "bg-red-700 hover:bg-red-800 text-white" 
-            : "bg-green-700 hover:bg-green-800 text-white"}
-          ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-        `}
-        disabled={disabled}
-      >
-        {isChange ? (
-          <>
-            <TrashIcon className="w-4 h-4" />
-            Remove from Cart
-          </>
-        ) : (
-          <>
-            <ShoppingCartIcon className="w-4 h-4" />
-            Add to Cart
-          </>
-        )}
-      </button>
-
-{/* 
-        <button onClick={handleOnChange}
-          className={`w-full mt-2 py-2 text-sm rounded flex items-center justify-center gap-2 transition duration-300 ${
-            inCart
-              ? "bg-red-700 hover:bg-red-800 text-white"
-              : "bg-green-700 hover:bg-green-800 text-white"
-          } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+        <button
+          onClick={() => (isInCart ? onRemove(product.id) : onAdd(product))}
+          className={`w-full mt-2 py-2 text-sm rounded flex items-center justify-center gap-2 transition duration-300
+            ${
+              isInCart
+                ? "bg-red-700 hover:bg-red-800"
+                : "bg-green-700 hover:bg-green-800"
+            }
+            text-white ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={disabled}
         >
-          {inCart ? (
+          {isInCart ? (
             <>
               <TrashIcon className="w-4 h-4" />
               Remove from Cart
@@ -90,7 +70,7 @@ export default function ProductCard({ product }) {
               Add to Cart
             </>
           )}
-        </button> */}
+        </button>
       </div>
     </div>
   );
