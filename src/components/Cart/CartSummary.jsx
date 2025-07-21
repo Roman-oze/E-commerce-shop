@@ -1,25 +1,25 @@
-
 import { useState } from "react";
+import Checkout from "../Cart/Checkout"; // ✅ Adjust path if necessary
 
 export default function OrderSummary({ subtotal, discount }) {
+  const [location, setLocation] = useState("inside");
+  const [showModal, setShowModal] = useState(false);
 
+  const deliveryFee = location === "inside" ? 50 : 150;
+  const total = subtotal - discount + deliveryFee;
 
-const [location, setLocation] = useState("inside");
-
-// Simple delivery fee logic
-const deliveryFee = location === "inside" ? 50 : 150;
-
-// Final total calculation
-const total = subtotal - discount + deliveryFee;
-
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className="mt-6">
       <h3 className="font-bold text-lg mb-4">Order Summary</h3>
 
-      {/* Delivery Location Selector */}
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Delivery Location</label>
+        <label className="block text-sm font-medium mb-1">
+          Delivery Location
+        </label>
         <select
           value={location}
           onChange={(e) => setLocation(e.target.value)}
@@ -50,24 +50,33 @@ const total = subtotal - discount + deliveryFee;
       </div>
 
       <div className="flex items-center space-x-2 mb-6">
-        <div className="flex-grow relative">
-          <input
-            type="text"
-            placeholder="Add promo code"
-            className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm"
-          />
-        </div>
+        <input
+          type="text"
+          placeholder="Add promo code"
+          className="w-full border border-gray-300 rounded-md py-2 px-3 text-sm"
+        />
         <button className="bg-black text-white rounded-md px-4 py-2 text-sm">
           Apply
         </button>
       </div>
 
-      <a
-        href="#"
-        className="block bg-black text-white text-center py-3 rounded-md hover:bg-gray-800 transition-colors"
+      <button
+        onClick={() => setShowModal(true)}
+        className="w-full bg-black text-white text-center py-3 rounded-md hover:bg-gray-800 transition-colors"
       >
         Go to Checkout <span className="inline-block ml-2">→</span>
-      </a>
+      </button>
+
+      {/* ✅ Modal for checkout */}
+      {showModal && (
+        <Checkout
+          total={total}
+          discount={discount}
+          location={location}
+          deliveryFee={deliveryFee}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 }
