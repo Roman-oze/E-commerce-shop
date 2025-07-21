@@ -1,4 +1,4 @@
-// src/components/ProductCard/ProductHeader.jsx
+
 import React from "react";
 
 export default function ProductHeader({ title, sortOption, onSortChange }) {
